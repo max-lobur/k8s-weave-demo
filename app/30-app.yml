@@ -28,7 +28,7 @@ spec:
       - name: api
         image: lobur/netcat
         imagePullPolicy: IfNotPresent
-        command: ['bash', '-c', 'while true; do nc -q1 -l 443; done']
+        command: ['bash', '-c', 'while true; do nc -k -w1 -q1 -l 443; done']
         ports:
         - containerPort: 443
 ---
@@ -62,7 +62,7 @@ spec:
       - name: db
         image: lobur/netcat
         imagePullPolicy: IfNotPresent
-        command: ['bash', '-c', 'while true; do nc -q1 -l 5432; done']
+        command: ['bash', '-c', 'while true; do nc -k -w1 -q1 -l 5432; done']
         ports:
         - containerPort: 5432
 ---

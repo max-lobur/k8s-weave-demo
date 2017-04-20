@@ -36,4 +36,4 @@ function run_tests() {
 
 setup
 run_tests
-#teardown
+teardown
