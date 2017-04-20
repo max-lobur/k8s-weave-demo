@@ -1,0 +1,12 @@
+kind: Pod
+apiVersion: v1
+metadata:
+  name: dummy-other-ns
+  namespace: default
+spec:
+  containers:
+  - name: dummy-other-ns
+    image: lobur/netcat
+    imagePullPolicy: IfNotPresent
+    command: ['sleep', '3600']
+  restartPolicy: Always

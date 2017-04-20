@@ -1,0 +1,104 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: api
+  labels:
+    role: api
+  namespace: net-policy-test
+spec:
+  selector:
+    role: api
+  ports:
+    - name: api-tcp
+      protocol: TCP
+      port: 443
+---
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: api-deploy
+  namespace: net-policy-test
+spec:
+  template:
+    metadata:
+      labels:
+        role: api
+    spec:
+      containers:
+      - name: api
+        image: lobur/netcat
+        imagePullPolicy: IfNotPresent
+        command: ['bash', '-c', 'while true; do nc -q1 -l 443; done']
+        ports:
+        - containerPort: 443
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: db
+  labels:
+    role: db
+  namespace: net-policy-test
+spec:
+  selector:
+    role: db
+  ports:
+    - name: db-tcp
+      protocol: TCP
+      port: 5432
+---
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: db-deploy
+  namespace: net-policy-test
+spec:
+  template:
+    metadata:
+      labels:
+        role: db
+    spec:
+      containers:
+      - name: db
+        image: lobur/netcat
+        imagePullPolicy: IfNotPresent
+        command: ['bash', '-c', 'while true; do nc -q1 -l 5432; done']
+        ports:
+        - containerPort: 5432
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: logger
+  labels:
+    role: logger
+  namespace: net-policy-test
+spec:
+  selector:
+    role: logger
+  ports:
+    - name: log-udp
+      protocol: UDP
+      port: 514
+---
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: logger-deploy
+  namespace: net-policy-test
+spec:
+  template:
+    metadata:
+      labels:
+        role: logger
+    spec:
+      containers:
+      - name: logger
+        image: lobur/netcat
+        imagePullPolicy: IfNotPresent
+        # A real UDP logger could be tested in other way:
+        # - write some log
+        # - verify it appeared in container / volume
+        command: ['bash', '-c', 'while true; do echo "hello udp" | nc -u -q1 -l 514; done']
+        ports:
+        - containerPort: 514

@@ -1,0 +1,33 @@
+kind: NetworkPolicy
+apiVersion: extensions/v1beta1
+metadata:
+ name: db-accesss
+ namespace: net-policy-test
+spec:
+ podSelector:
+  matchLabels:
+    role: db
+ ingress:
+  - from:
+     - podSelector:
+        matchLabels:
+         role: api
+    ports:
+     - protocol: TCP
+       port: 5432
+---
+kind: NetworkPolicy
+apiVersion: extensions/v1beta1
+metadata:
+ name: logger-access
+ namespace: net-policy-test
+spec:
+ podSelector:
+  matchLabels:
+    role: logger
+ ingress:
+  - from:
+     - podSelector:
+    ports:
+     - protocol: UDP
+       port: 514

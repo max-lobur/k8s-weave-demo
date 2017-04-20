@@ -1,0 +1,14 @@
+kind: Pod
+apiVersion: v1
+metadata:
+  name: dummy-db
+  namespace: net-policy-test
+  labels:
+    role: db
+spec:
+  containers:
+  - name: dummy-db
+    image: lobur/netcat
+    imagePullPolicy: IfNotPresent
+    command: ['sleep', '3600']
+  restartPolicy: Always
