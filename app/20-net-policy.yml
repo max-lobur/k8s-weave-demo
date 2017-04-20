@@ -28,6 +28,8 @@ spec:
  ingress:
   - from:
      - podSelector:
+         matchLabels:
+         # Any pod within the namespace
     ports:
      - protocol: UDP
        port: 514

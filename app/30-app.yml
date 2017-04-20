@@ -99,6 +99,6 @@ spec:
         # A real UDP logger could be tested in other way:
         # - write some log
         # - verify it appeared in container / volume
-        command: ['bash', '-c', 'while true; do echo "hello udp" | nc -u -q1 -l 514; done']
+        command: ['bash', '-c', 'while true; do echo "hello udp" | nc -u -w1 -q1 -l 514; done']
         ports:
         - containerPort: 514

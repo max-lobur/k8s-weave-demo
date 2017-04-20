@@ -2,14 +2,14 @@
 1) Create a Kubernetes cluster  
 2) Use Weave to setup networking  
 3) Add three hosts
-* Logger
-* API
-* DB
+    * Logger
+    * API
+    * DB
 
 4) Use Weave to setup the following network rules
-* API → Logger UDP port 514
-* API → DB TCP port 5432
-* DB → Logger UDP port 514
+    * API → Logger UDP port 514
+    * API → DB TCP port 5432
+    * DB → Logger UDP port 514
 
 5) Visualize this in a network diagram  
 6) Add a script to prove that each machine can *only* connect to the machine(s) specified in the network rules above  
@@ -36,7 +36,8 @@ cd k8s-weave-demo
 ```
 * Deploy an app:
 ```
-kubectl apply -f app
-kubectl -n net-policy-test get po
+kubectl create -f app
+watch kubectl -n net-policy-test get po -owide
 ```
-* Run tests: `./tests/run-tests.sh`
+* Run tests: `./run-tests.sh`
+* Delete an app: `kubectl delete ns net-policy-test`

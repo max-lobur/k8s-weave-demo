@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 function setup() {
     echo "========== Create dummy pods =========="
     kubectl create -f tests/dummy
@@ -26,9 +28,9 @@ function teardown() {
 
 function run_tests() {
     echo "========== Run tests =========="
-    for f in `ls ./tests/test_*`;
+    for t in `ls ./tests/test_*`;
     do
-        bash $f && echo "TEST $f PASSED" || echo "TEST $f FAILED"
+        bash $t && echo "TEST $t PASSED" || echo "TEST $t FAILED"
     done
 }
 
