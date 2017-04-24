@@ -42,3 +42,7 @@
     ```
 * Run tests: `./run-tests.sh`
 * Delete an app: `kubectl delete ns net-policy-test`
+
+### Network schema
+
+![net diag.](net-diag.png)
