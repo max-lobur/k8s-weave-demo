@@ -12,6 +12,7 @@ spec:
     - name: api-tcp
       protocol: TCP
       port: 443
+      targetPort: 80
 ---
 apiVersion: apps/v1beta1
 kind: Deployment
@@ -26,11 +27,10 @@ spec:
     spec:
       containers:
       - name: api
-        image: lobur/netcat
+        image: lobur/tcp-server:v2
         imagePullPolicy: IfNotPresent
-        command: ['bash', '-c', 'while true; do nc -k -w1 -q1 -l 443; done']
         ports:
-        - containerPort: 443
+        - containerPort: 80
 ---
 kind: Service
 apiVersion: v1
@@ -46,6 +46,7 @@ spec:
     - name: db-tcp
       protocol: TCP
       port: 5432
+      targetPort: 80
 ---
 apiVersion: apps/v1beta1
 kind: Deployment
@@ -60,11 +61,10 @@ spec:
     spec:
       containers:
       - name: db
-        image: lobur/netcat
+        image: lobur/tcp-server:v2
         imagePullPolicy: IfNotPresent
-        command: ['bash', '-c', 'while true; do nc -k -w1 -q1 -l 5432; done']
         ports:
-        - containerPort: 5432
+        - containerPort: 80
 ---
 kind: Service
 apiVersion: v1
@@ -94,11 +94,10 @@ spec:
     spec:
       containers:
       - name: logger
-        image: lobur/netcat
+        image: lobur/udp-server:v2
         imagePullPolicy: IfNotPresent
         # A real UDP logger could be tested in other way:
         # - write some log
         # - verify it appeared in container / volume
-        command: ['bash', '-c', 'while true; do echo "hello udp" | nc -u -w1 -q1 -l 514; done']
         ports:
         - containerPort: 514

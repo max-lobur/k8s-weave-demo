@@ -10,7 +10,7 @@ function setup() {
         in_ns=`kubectl -n net-policy-test get po | grep dummy | grep Running | wc -l`
         other_ns=`kubectl -n default get po | grep dummy | grep Running | wc -l`
         [[ "in_ns" -eq "3" ]] && [[ "other_ns" -eq "1" ]] && break
-        if [[ retry -ge 15 ]]; then
+        if [[ retry -ge 30 ]]; then
             echo "ERROR: Timeout creating dummy pods";
             kubectl delete -f tests/dummy;
             exit 1;
@@ -36,4 +36,4 @@ function run_tests() {
 
 setup
 run_tests
-teardown
+#teardown

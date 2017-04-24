@@ -14,7 +14,7 @@ spec:
          role: api
     ports:
      - protocol: TCP
-       port: 5432
+       port: 80
 ---
 kind: NetworkPolicy
 apiVersion: extensions/v1beta1
